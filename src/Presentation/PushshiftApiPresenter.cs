@@ -29,24 +29,12 @@ namespace Presentation
         public string Counter { get; private set; }
         public string Response { get; private set; }
 
+        private IRedisConnector Connector => RedisConnector.Singleton;
         private IRedditApiService Service { get; set; }
 
         #endregion
 
         #region Public Methods
-
-        private async Task<IRedditData> GetRedditData(string requestUri, QueryType queryType)
-        {
-            switch (queryType)
-            {
-                case QueryType.Comment:
-                    return await Service.GetCommentData(requestUri);
-                case QueryType.Submission:
-                    return await Service.GetSubmissionData(requestUri);
-                default:
-                    return null;
-            }
-        }
 
         public async Task BuildResponseContent(ISearchOptions options)
         {
@@ -107,6 +95,19 @@ namespace Presentation
             }
 
             Response = sb.ToString();
+        }
+
+        private async Task<IRedditData> GetRedditData(string requestUri, QueryType queryType)
+        {
+            switch (queryType)
+            {
+                case QueryType.Comment:
+                    return await Service.GetCommentData(requestUri);
+                case QueryType.Submission:
+                    return await Service.GetSubmissionData(requestUri);
+                default:
+                    return null;
+            }
         }
 
         #endregion

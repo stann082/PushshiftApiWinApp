@@ -52,6 +52,8 @@ namespace Domain
             InitializeLogging();
             InitializeAutoCompleteSaves();
             InitializeWebBrowserFilePath();
+
+            RedisConnector.Singleton.Initialize();
         }
 
         public void InitializeAutoCompleteSaves()

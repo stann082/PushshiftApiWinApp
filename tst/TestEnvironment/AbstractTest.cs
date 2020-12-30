@@ -12,6 +12,7 @@ namespace TestEnvironment
         protected AbstractTest()
         {
             ApplicationLogger.Singleton = new MockApplicationLogger();
+            RedisConnector.Singleton = new MockRedisConnector();
         }
 
         #endregion
