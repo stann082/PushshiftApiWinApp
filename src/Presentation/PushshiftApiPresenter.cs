@@ -48,26 +48,28 @@ namespace Presentation
                 return;
             }
 
-            IContent[] comments = data.Contents;
+            Connector.CacheResults(data, 1);
+
+            IContent[] contents = data.Contents;
             if (options.ShowExactMatches)
             {
-                comments = data.Contents.Where(c => c.Text.Contains(options.Query)).ToArray();
+                contents = data.Contents.Where(c => c.Text.Contains(options.Query)).ToArray();
             }
 
-            if (comments.Length == 0)
+            if (contents.Length == 0)
             {
                 Response = "Nothing found...";
                 return;
             }
 
-            Counter = $"Showing {comments.Length} items";
+            Counter = $"Showing {contents.Length} items";
 
             StringBuilder sb = new();
 
             sb.AppendLine($"API call: {Constants.BASE_URL}{requestUri}");
             sb.AppendLine();
 
-            foreach (IContent content in comments)
+            foreach (IContent content in contents)
             {
                 sb.AppendLine($"Subreddit: {content.Subreddit}");
                 sb.AppendLine($"    Score: {content.Score}");

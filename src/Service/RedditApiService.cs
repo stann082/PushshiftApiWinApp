@@ -49,6 +49,7 @@ namespace Service
             HttpResponseMessage response = await HttpClient.GetAsync(requestUri);
             if (!response.IsSuccessStatusCode)
             {
+                Environment.LogError($"Application failed to retrieve data. Status code: {response.StatusCode}");
                 return default;
             }
 
@@ -64,7 +65,20 @@ namespace Service
                 Environment.LogError(ex);
             }
 
+            SetJsonResponse(data, responseJson);
             return data;
+        }
+
+        private void SetJsonResponse<T>(T data, string jsonResponse)
+        {
+            // guard clause - wrong data type
+            if (data is not IRedditData)
+            {
+                return;
+            }
+
+            IRedditData redditData = (IRedditData)data;
+            redditData.OriginalResponse = jsonResponse;
         }
 
         #endregion

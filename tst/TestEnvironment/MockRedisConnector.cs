@@ -1,15 +1,21 @@
 ﻿using Domain;
+using StackExchange.Redis;
 
 namespace TestEnvironment
 {
     public class MockRedisConnector : IRedisConnector
     {
 
-        public IRedisConnection Connection { get; set; }
+        public ConnectionMultiplexer Connection { get; set; }
 
-        public void Initialize()
+        public void CacheResults(IRedditData data, int page)
         {
             // do nothing
+        }
+
+        public bool Initialize()
+        {
+            return false;
         }
 
     }

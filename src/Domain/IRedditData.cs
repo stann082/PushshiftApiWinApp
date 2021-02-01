@@ -4,6 +4,7 @@
     {
 
         IContent[] Contents { get; }
+        string OriginalResponse { get; set; }
 
     }
 }

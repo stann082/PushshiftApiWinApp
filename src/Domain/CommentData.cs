@@ -18,6 +18,7 @@ namespace Domain
         #region IRedditData Members
 
         public IContent[] Contents => Comments.Cast<IContent>().ToArray();
+        public string OriginalResponse { get; set; }
 
         #endregion
 

@@ -75,6 +75,15 @@ namespace PushshiftAPI
 
         #region Event Handlers
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.F))
+            {
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private async void btnSearch_Click(object sender, EventArgs e)
         {
             ToggleControls(false);

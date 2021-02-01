@@ -1,13 +1,16 @@
-﻿namespace Domain
+﻿using StackExchange.Redis;
+
+namespace Domain
 {
     public interface IRedisConnector
     {
 
         // attributes
-        IRedisConnection Connection { get; }
+        ConnectionMultiplexer Connection { get; }
 
         // behavior
-        void Initialize();
+        void CacheResults(IRedditData data, int page);
+        bool Initialize();
 
     }
 }

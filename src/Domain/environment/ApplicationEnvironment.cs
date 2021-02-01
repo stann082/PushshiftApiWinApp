@@ -52,8 +52,7 @@ namespace Domain
             InitializeLogging();
             InitializeAutoCompleteSaves();
             InitializeWebBrowserFilePath();
-
-            RedisConnector.Singleton.Initialize();
+            InitializeRedis();
         }
 
         public void InitializeAutoCompleteSaves()
@@ -81,6 +80,11 @@ namespace Domain
             {
                 SavedUserNames = File.ReadAllLines(AutoCompleteUserNameFilePath);
             }
+        }
+
+        public void LogError(string errorMessage)
+        {
+            Logger.LogError(errorMessage);
         }
 
         public void LogError(Exception exception)
@@ -153,6 +157,16 @@ namespace Domain
         {
             string logDir = GetEnvironmentVariable(ENV_KEY_LOG_DIR, ENV_VALUE_LOG_DIR);
             ApplicationLogger.Singleton.Initialize(logDir);
+        }
+
+        private void InitializeRedis()
+        {
+            if (RedisConnector.Singleton.Initialize())
+            {
+                return;
+            }
+
+            RedisConnector.Singleton = NullRedisConnector.Singleton;
         }
 
         private void InitializeWebBrowserFilePath()
